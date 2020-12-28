@@ -5,7 +5,7 @@ import './App.css';
 import {BrowserRouter, Route} from 'react-router-dom';
 
 import Home from './components/screens/Home';
-import Signin from './components/screens/Login';
+import Signin from './components/screens/SignIn';
 import Profile from './components/screens/Profile';
 import Signup from './components/screens/Signup';
 
