@@ -1,0 +1,9 @@
+POST http://localhost:5000/createpost
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU5YzE1MDhkYzlkOTQ1NDQ3NTFlZjUiLCJpYXQiOjE2MDkxNTQ5Mzh9.d0CH6228c27c-GB2mrISiYKla1YVQ5qAFbDXyt6XMeo
+
+{
+    "title" : "title 1",
+    "body" : "body1"
+
+}
