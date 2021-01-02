@@ -43,6 +43,8 @@ const Signup = () => {
             history.push('/signin')
           }
            console.log(data);
+        }).catch(error => {
+          console.log(error);
         })
     }
 
