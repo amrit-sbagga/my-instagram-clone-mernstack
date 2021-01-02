@@ -60,7 +60,7 @@ const Signup = () => {
                  placeholder="email"
                  value={email}
                  onChange = {(e) => setEmail(e.target.value)}/>
-          <input type="text" 
+          <input type="password" 
                  placeholder="password"
                  value={password}
                  onChange = {(e) => setPassword(e.target.value)}/>
