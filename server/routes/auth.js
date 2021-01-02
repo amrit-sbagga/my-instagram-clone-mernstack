@@ -64,19 +64,21 @@ router.post('/signin', (req, res) => {
    }
 
    User.findOne({email:email})
-    .then(savedUer => {
-        if(!savedUer){
+    .then(savedUser => {
+        if(!savedUser){
             return res.status(422).json({error : "Invalid email or password"})
         }
 
-        bcrypt.compare(password, savedUer.password)
+        bcrypt.compare(password, savedUser.password)
             .then(doMatch => {
                 if(doMatch){
                    // res.status(422).json({msg : "Successfully signed in"})
-                   const token = jwt.sign({_id: savedUer._id}, JWT_SECRET);
+                   const token = jwt.sign({_id: savedUser._id}, JWT_SECRET);
+                   const {_id, name, email} = savedUser
                    res.status(422).json({
                        msg : "Successfully signed in",
-                       token
+                       token,
+                       user: {_id, name, email}
                     })
                 } else{
                     return res.status(422).json({error : "Invalid email or password"})
