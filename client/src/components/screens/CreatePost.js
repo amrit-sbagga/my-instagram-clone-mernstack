@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CLOUD_NAME } from '../../keys';
 import { useHistory } from 'react-router-dom';
 import M from 'materialize-css';
@@ -9,29 +9,15 @@ const CreatePost = () => {
     const [body, setBody] = useState("");
     const [image, setImage] = useState("");
     const [url, setUrl] = useState("");
-
-    const CLOUD_API = "https://api.cloudinary.com/v1_1/" + CLOUD_NAME;
-
-    const postDetails = () => {
-        const data = new FormData();
-        data.append("file", image);
-        data.append("upload_preset", "insta-clone");
-        data.append("cloudname", CLOUD_NAME);
-        console.log('data here = ', data)
-        fetch(CLOUD_API + "/image/upload", {
-            method: "post",
-            body:data
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            setUrl(data.url);
-
+    useEffect(() => { 
+        //useEffect also executes when component mount
+        if(url){
             fetch("/createpost",
             {
                 method: "post",
                 headers : {
-                    "Content-Type" : "application/json"
+                    "Content-Type" : "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("jwt")
                 },
                 body : JSON.stringify({
                     title,
@@ -54,8 +40,28 @@ const CreatePost = () => {
             }
             console.log(data);
             }).catch(error => {
-            console.log(error);
+                console.log(error);
             })
+        }
+    }, [url])
+
+    const CLOUD_API = "https://api.cloudinary.com/v1_1/" + CLOUD_NAME;
+
+    const postDetails = () => {
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "insta-clone");
+        data.append("cloudname", CLOUD_NAME);
+        console.log('data here = ', data)
+        fetch(CLOUD_API + "/image/upload", {
+            method: "post",
+            body:data
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            setUrl(data.url);
+
         })
         .catch(error => {
             console.log(error);
@@ -80,7 +86,7 @@ const CreatePost = () => {
                 />
             <input type="text" 
                 placeholder="body" 
-                value={title}
+                value={body}
                 onChange={(e)=>setBody(e.target.value)}
                 />
             <div className="file-field input-field">
