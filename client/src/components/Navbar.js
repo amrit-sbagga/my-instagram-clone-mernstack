@@ -13,14 +13,9 @@ const NavBar = () => {
         if(state){
             return [
                 <li><Link to="/profile">Profile</Link></li>,
-                <li><Link to="/create">Create Post</Link></li> 
-            ]
-        }else{
-            return [
-                <li><Link to="/signin">Signin</Link></li>,
-                <li><Link to="/signup">Signup</Link></li>,
+                <li><Link to="/create">Create Post</Link></li>,
                 <li>
-                    <button className="btn #c62828 red darken-3"
+                    <button className="btn #c62828 red darken-3" style={{marginRight:"10px"}}
                         onClick = {() => {
                             localStorage.clear();
                             dispatch({type:"CLEAR"});
@@ -29,6 +24,11 @@ const NavBar = () => {
                         Logout
                     </button>
                 </li>
+            ]
+        }else{
+            return [
+                <li><Link to="/signin">Signin</Link></li>,
+                <li><Link to="/signup">Signup</Link></li>
             ]
         }
     }
