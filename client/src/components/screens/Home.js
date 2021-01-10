@@ -7,8 +7,8 @@ const Home = () => {
         headers:{
           Authorization : "Bearer " + localStorage.getItem('jwt')
         }
-      }).then(res => res.json()).
-      then(result => {
+      }).then(res => res.json())
+      .then(result => {
         console.log("result = ", result)
         setData(result.posts);
       })

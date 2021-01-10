@@ -1,6 +1,6 @@
 Instagram clone app used links
 
-1 - https://materializecss.com/text-inputs.html
+1 - https://materializecss.com
 
 2 - https://fonts.google.com/specimen/Grand+Hotel?query=grand&sidebar.open=true&selection.family=Grand+Hotel
 
