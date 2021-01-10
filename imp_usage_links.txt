@@ -1,0 +1,10 @@
+Instagram clone app used links
+
+1 - https://materializecss.com/text-inputs.html
+
+2 - https://fonts.google.com/specimen/Grand+Hotel?query=grand&sidebar.open=true&selection.family=Grand+Hotel
+
+3 - Uploading file using cloudinary 
+   (https://codesandbox.io/embed/jq4wl1xjv)
+
+4 - 
