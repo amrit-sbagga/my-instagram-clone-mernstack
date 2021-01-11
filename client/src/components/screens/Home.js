@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { UserContext } from '../../App';
 
 const Home = () => {
     const [ data, setData ] = useState([])
+    const { state, dispatch } = useContext(UserContext);
     useEffect(() => {
       fetch('/allpost', {
         headers:{
@@ -27,7 +29,17 @@ const Home = () => {
           }) 
         }).then(res => res.json())
         .then(result => {
-          console.log(result);
+          //console.log(result);
+          const newData = data.map(item => {
+            if(item._id === result._id){
+              return result;
+            }else{
+               return item;
+            }
+          })
+          setData(newData);
+        }).catch(err => {
+          console.log(err)
         })
     }
 
@@ -43,7 +55,17 @@ const Home = () => {
           }) 
         }).then(res => res.json())
         .then(result => {
-          console.log(result);
+          //console.log(result);
+          const newData = data.map(item => {
+            if(item._id === result._id){
+              return result;
+            }else{
+               return item;
+            }
+          })
+          setData(newData);
+        }).catch(err => {
+          console.log(err)
         })
     }
 
@@ -60,10 +82,15 @@ const Home = () => {
                 </div>
                 <div className="card-content">
                   <i className="material-icons" style={{color: 'red'}}>favorite</i>
-                  <i className="material-icons"
-                      onClick={() => likePost(item._id)}>thumb_up</i>
-                  <i className="material-icons"
-                      onClick={() => unlikePost(item._id)}>thumb_down</i>
+                  {item.likes.includes(state._id)
+                  ?
+                    <i className="material-icons"
+                        onClick={() => unlikePost(item._id)}>thumb_down</i>
+                  :
+                    <i className="material-icons"
+                        onClick={() => likePost(item._id)}>thumb_up</i>
+                  }
+                  
                   <h6>{item.likes.length} likes</h6>
                   <h6>{item.title}</h6>
                   <p>{item.body}</p>
