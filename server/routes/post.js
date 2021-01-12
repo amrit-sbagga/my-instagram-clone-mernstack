@@ -65,12 +65,35 @@ router.put('/like', requireLogin, (req, res) => {
     })
 })
 
+//for unlike
 router.put('/unlike', requireLogin, (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {
         $pull : {likes : req.user._id}
     }, {
         new : true
     }).exec((err, result) => {
+        if(err){
+            return res.status(422).json({error: err})
+        }else{
+            res.json(result)
+        }
+    })
+})
+
+
+//for comments
+router.put('/comment', requireLogin, (req, res) => {
+    const comment = {
+        text: req.body.text,
+        postedBy: req.user._id
+    }
+    Post.findByIdAndUpdate(req.body.postId, {
+        $push : {comments : comment}
+    }, {
+        new : true
+    })
+    .populate("comments.postedBy", "_id name")
+    .exec((err, result) => {
         if(err){
             return res.status(422).json({error: err})
         }else{
