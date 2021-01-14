@@ -104,4 +104,23 @@ router.put('/comment', requireLogin, (req, res) => {
     })
 })
 
+//for delete
+router.delete('/delete/:id', requireLogin, (req, res) => {
+    Post.find({_id : req.params.postId})
+        .populate("postedBy", "_id")
+        .exec((err, post) => {
+            if(err || !post)
+                return res.status(422).json({error:err})
+            //logged in user can delete his post
+            if(post.postedBy._id.toString() === req.user._id.toString()){
+                post.remove()
+                    .then(result => {
+                        res.json(result)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+            }
+        })
+})
+
 module.exports = router

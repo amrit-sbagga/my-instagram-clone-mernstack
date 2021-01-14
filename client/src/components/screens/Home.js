@@ -98,13 +98,37 @@ const Home = () => {
 
     }
 
+    const deletePost = (postId) => {
+      fetch(`/delete/${postId}`, {
+          method : "delete",
+          headers : {
+            "Authorization" : "Bearer " + localStorage.getItem("jwt")
+          }
+      }).then(res => res.json())
+      .then(result => {
+        console.log(result);
+        const newData = data.filter(item => {
+          return item._id !== result._id
+        })
+        setData(newData)
+      }).catch(err => {
+        console.log(err);
+      })
+    }
+
     return (
       <div className="home">
         {
           data.map(item => {
             return(
               <div className="card home-card" key={item._id}>
-                <h5>{item.postedBy.name}</h5>
+                <h5>
+                  {item.postedBy.name}
+                  {item.postedBy._id == state._id && 
+                    <i className="material-icons" style={{float: 'right'}}
+                    onClick={() => deletePost(item._id)}
+                    >delete</i>}
+                  </h5>
                 <div className="card-image">
                   {/* <img src="https://images.unsplash.com/photo-1592685444739-bcb532f511f8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTAxfHx3YWxscGFwZXIlMjBsYW5kc2NhcGV8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img1"/> */}
                   <img src={item.photo} alt="img1" width="250px" height="250px" />
@@ -124,7 +148,9 @@ const Home = () => {
                   <h6>{item.title}</h6>
                     <p>{item.body}</p>
                     {
+                      
                       item.comments.map(record => {
+                      console.log("record = ", record);
                       return(
                         <h6 key={record._id}>
                           <span style={{fontWeight:"500"}}>
